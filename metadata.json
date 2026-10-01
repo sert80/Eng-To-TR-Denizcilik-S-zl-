@@ -1,0 +1,6 @@
+{
+  "name": "Denizcilik Sözlüğü",
+  "description": "Mobil ve masaüstünde tamamen internetsiz (çevrimdışı/offline) çalışabilen kapsamlı İngilizce - Türkçe Denizcilik Terimleri Sözlüğü PWA uygulaması.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>Denizcilik Sözlüğü</title>
+    <meta name="description" content="Mobil ve masaüstünde tamamen internetsiz (çevrimdışı/offline) çalışabilen kapsamlı İngilizce - Türkçe Denizcilik Terimleri Sözlüğü PWA uygulaması." />
+    <meta property="og:title" content="Denizcilik Sözlüğü" />
+    <meta property="og:description" content="Mobil ve masaüstünde tamamen internetsiz (çevrimdışı/offline) çalışabilen kapsamlı İngilizce - Türkçe Denizcilik Terimleri Sözlüğü PWA uygulaması." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/anchor-icon.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0284c7" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="DenizSözlük" />
+    <script>
+      (function() {
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = event && event.reason;
+          var msg = reason && (reason.message || String(reason));
+          if (typeof msg === 'string' && (msg.indexOf('WebSocket closed without opened') !== -1 || msg.indexOf('failed to connect to websocket') !== -1)) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }, true);
+        var origError = console.error;
+        console.error = function() {
+          var firstArg = arguments[0] ? String(arguments[0]) : '';
+          if (firstArg.indexOf('[vite] failed to connect to websocket') !== -1 || firstArg.indexOf('WebSocket closed without opened') !== -1) {
+            return;
+          }
+          return origError.apply(console, arguments);
+        };
+        try {
+          var saved = localStorage.getItem('maritime_theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) metaTheme.setAttribute('content', '#0b1120');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/jpeg" href="/anchor-icon.jpg" />
+    <link rel="alternate icon" href="/anchor-icon.jpg" />
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-cyan-600 selection:text-white transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      (function() {
+        var CACHE_NAME = 'denizcilik-sozlugu-v30';
+
+        function warmOfflineCache() {
+          if (!navigator.onLine || !('caches' in window)) return;
+          try {
+            var urls = new Set([
+              '/',
+              '/index.html',
+              '/manifest.json',
+              '/anchor-icon.jpg',
+              '/apple-touch-icon.png',
+              '/pwa-192x192.png',
+              '/pwa-512x512.png'
+            ]);
+
+            var nodes = document.querySelectorAll('script[src], link[rel="stylesheet"][href], link[rel="modulepreload"][href]');
+            for (var i = 0; i < nodes.length; i++) {
+              var raw = nodes[i].getAttribute('src') || nodes[i].getAttribute('href');
+              if (raw) {
+                try {
+                  var u = new URL(raw, window.location.origin);
+                  if (u.origin === window.location.origin) urls.add(u.href);
+                } catch (e) {}
+              }
+            }
+
+            if (window.performance && typeof window.performance.getEntriesByType === 'function') {
+              var resources = window.performance.getEntriesByType('resource');
+              for (var j = 0; j < resources.length; j++) {
+                var rName = resources[j] && resources[j].name;
+                if (rName && rName.indexOf(window.location.origin) === 0 && rName.indexOf('/api/') === -1) {
+                  urls.add(rName);
+                }
+              }
+            }
+
+            var urlList = Array.from(urls);
+
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+              navigator.serviceWorker.controller.postMessage({
+                type: 'CACHE_URLS',
+                urls: urlList
+              });
+            }
+
+            caches.open(CACHE_NAME).then(function(cache) {
+              urlList.forEach(function(url) {
+                cache.match(url).then(function(existing) {
+                  if (!existing) {
+                    fetch(url).then(function(res) {
+                      if (res && res.ok) {
+                        cache.put(url, res.clone());
+                        if (url.endsWith('/index.html') || url === window.location.origin + '/') {
+                          cache.put('/', res.clone());
+                          cache.put('/index.html', res.clone());
+                        }
+                      }
+                    }).catch(function() {});
+                  }
+                });
+              });
+            }).catch(function() {});
+          } catch (e) {}
+        }
+
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(function(reg) {
+              if (navigator.onLine) {
+                reg.update().catch(function() {});
+              }
+              if (reg.waiting) {
+                reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+              }
+              reg.addEventListener('updatefound', function() {
+                var newWorker = reg.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', function() {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      newWorker.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                    if (newWorker.state === 'activated') {
+                      warmOfflineCache();
+                    }
+                  });
+                }
+              });
+              setTimeout(warmOfflineCache, 1200);
+            }).catch(function(err) {
+              console.warn('SW registration skipped:', err);
+            });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
+

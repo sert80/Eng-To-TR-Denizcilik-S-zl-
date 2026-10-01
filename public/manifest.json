@@ -1,0 +1,68 @@
+{
+  "id": "/",
+  "name": "Denizcilik Sözlüğü",
+  "short_name": "DenizSözlük",
+  "description": "İngilizce - Türkçe Çevrimdışı Denizcilik Terimleri Sözlüğü",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay"],
+  "orientation": "any",
+  "background_color": "#f8fafc",
+  "theme_color": "#0284c7",
+  "categories": ["education", "books", "reference", "utilities"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Denizcilik Sözlüğü Masaüstü Görünümü"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Denizcilik Sözlüğü Mobil Görünümü"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sözlük Arama",
+      "short_name": "Arama",
+      "description": "Denizcilik terimlerinde anında arama yapın",
+      "url": "/",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kayıtlı Terimler",
+      "short_name": "Kayıtlar",
+      "description": "Kaydettiğiniz denizcilik terimleri",
+      "url": "/?tab=favorites",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

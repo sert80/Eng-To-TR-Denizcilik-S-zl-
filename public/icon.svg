@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2b48" />
+      <stop offset="100%" stop-color="#071728" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0284c7" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded canvas -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+
+  <!-- Subtle nautical compass dial ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#1e3a5f" stroke-width="3" stroke-dasharray="8 8" />
+  <circle cx="256" cy="256" r="176" fill="none" stroke="#1e40af" stroke-width="1.5" stroke-opacity="0.5" />
+
+  <!-- Outer helm handles (8 spokes) -->
+  <g stroke="url(#goldGrad)" stroke-width="10" stroke-linecap="round" filter="url(#glow)">
+    <line x1="256" y1="64" x2="256" y2="448" />
+    <line x1="64" y1="256" x2="448" y2="256" />
+    <line x1="120" y1="120" x2="392" y2="392" />
+    <line x1="120" y1="392" x2="392" y2="120" />
+  </g>
+
+  <!-- Helm Ring -->
+  <circle cx="256" cy="256" r="120" fill="none" stroke="url(#goldGrad)" stroke-width="16" />
+
+  <!-- Stylized Maritime Anchor in center -->
+  <g fill="none" stroke="#f8fafc" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Anchor Ring -->
+    <circle cx="256" cy="184" r="22" stroke="url(#cyanGrad)" stroke-width="14" fill="#071728" />
+    <!-- Stock (crossbar) -->
+    <line x1="206" y1="224" x2="306" y2="224" stroke="url(#cyanGrad)" stroke-width="14" />
+    <!-- Shank -->
+    <line x1="256" y1="206" x2="256" y2="336" stroke="#ffffff" stroke-width="16" />
+    <!-- Flukes / Arms -->
+    <path d="M184 286 C184 366 328 366 328 286" stroke="#ffffff" stroke-width="16" />
+    <!-- Crown bill tips -->
+    <polygon points="184,286 168,298 196,306" fill="#38bdf8" stroke="none" />
+    <polygon points="328,286 344,298 316,306" fill="#38bdf8" stroke="none" />
+  </g>
+
+  <!-- Central nautical star / hub -->
+  <circle cx="256" cy="256" r="16" fill="url(#goldGrad)" stroke="#071728" stroke-width="4" />
+</svg>

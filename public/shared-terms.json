@@ -1,0 +1,35 @@
+[
+  {
+    "id": "custom_1790462215928_w384h",
+    "en": "Burak",
+    "tr": "Yavru kurt",
+    "category": "Genel Denizcilik",
+    "firstLetter": "B",
+    "isCustom": true,
+    "createdAt": "27.09.2026 01:36:55",
+    "sourceFileName": "Tekil Kelime Ekleme",
+    "batchId": "batch_1790462215984"
+  },
+  {
+    "id": "custom_1790460009047_7rond",
+    "en": "ilker",
+    "tr": "kardeşimmm",
+    "category": "Genel Denizcilik",
+    "firstLetter": "I",
+    "isCustom": true,
+    "createdAt": "27.09.2026 01:00:09",
+    "sourceFileName": "Tekil Kelime Ekleme",
+    "batchId": "batch_1790460009077"
+  },
+  {
+    "id": "custom_1790459263690_7gnm0",
+    "en": "Kaan",
+    "tr": "Eski denizci yeni muhasebeci",
+    "category": "Genel Denizcilik",
+    "firstLetter": "K",
+    "isCustom": true,
+    "createdAt": "27.09.2026 00:47:43",
+    "sourceFileName": "Tekil Kelime Ekleme",
+    "batchId": "batch_1790459263741"
+  }
+]
