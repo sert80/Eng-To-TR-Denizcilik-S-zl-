@@ -1,5 +1,5 @@
 // Denizcilik Sözlüğü - Tam Çevrimdışı (Offline-First) Service Worker
-const CACHE_NAME = 'denizcilik-sozlugu-v30';
+const CACHE_NAME = 'denizcilik-sozlugu-v31';
 
 const CORE_ASSETS = [
   '/',

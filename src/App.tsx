@@ -227,7 +227,7 @@ export default function App() {
                   const keys = await caches.keys();
                   await Promise.all(
                     keys
-                      .filter((k) => k !== 'denizcilik-sozlugu-v30')
+                      .filter((k) => k !== 'denizcilik-sozlugu-v31')
                       .map((k) => caches.delete(k))
                   );
                 } catch {
